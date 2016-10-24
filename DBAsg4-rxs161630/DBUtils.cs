@@ -18,7 +18,7 @@ namespace DBAsg4_rxs161630
         {
             builder.Server = "localhost";
             builder.UserID = "root";
-            builder.Password = "7252";
+            builder.Password = "*";
             builder.Database = "asg3-rxs161630";
         }
 

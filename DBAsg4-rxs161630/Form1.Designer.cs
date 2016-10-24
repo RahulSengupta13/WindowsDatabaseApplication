@@ -70,34 +70,34 @@
             this.textBox_familyName = new System.Windows.Forms.TextBox();
             this.label_familyName = new System.Windows.Forms.Label();
             this.panel_friendDetails = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button_discard = new System.Windows.Forms.Button();
             this.button_delete = new System.Windows.Forms.Button();
             this.button_save = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panel_start = new System.Windows.Forms.Panel();
-            this.textBox_appointments = new System.Windows.Forms.TextBox();
-            this.button_add_friend = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox_appointment = new System.Windows.Forms.TextBox();
-            this.textBox_appointment_type = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox_appointment_date = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox_appointment_time = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox_appointment_location = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button_save_appointment = new System.Windows.Forms.Button();
-            this.button_new_appointment = new System.Windows.Forms.Button();
+            this.button_discard_appointment = new System.Windows.Forms.Button();
             this.textBox_appointment_contact = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.button_discard_appointment = new System.Windows.Forms.Button();
+            this.button_new_appointment = new System.Windows.Forms.Button();
+            this.button_save_appointment = new System.Windows.Forms.Button();
+            this.textBox_appointment_location = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox_appointment_time = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_appointment_date = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox_appointment_type = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox_appointment = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_appointments = new System.Windows.Forms.TextBox();
+            this.button_add_friend = new System.Windows.Forms.Button();
             this.panel_friendDetails.SuspendLayout();
-            this.panel_start.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel_start.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -478,6 +478,16 @@
             this.panel_friendDetails.TabIndex = 39;
             this.panel_friendDetails.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButton_male);
+            this.groupBox1.Controls.Add(this.radioButton_female);
+            this.groupBox1.Location = new System.Drawing.Point(162, 200);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(162, 36);
+            this.groupBox1.TabIndex = 43;
+            this.groupBox1.TabStop = false;
+            // 
             // button_discard
             // 
             this.button_discard.Location = new System.Drawing.Point(291, 667);
@@ -552,6 +562,144 @@
             this.panel_start.Size = new System.Drawing.Size(555, 709);
             this.panel_start.TabIndex = 41;
             // 
+            // button_discard_appointment
+            // 
+            this.button_discard_appointment.Enabled = false;
+            this.button_discard_appointment.Location = new System.Drawing.Point(397, 616);
+            this.button_discard_appointment.Name = "button_discard_appointment";
+            this.button_discard_appointment.Size = new System.Drawing.Size(84, 35);
+            this.button_discard_appointment.TabIndex = 17;
+            this.button_discard_appointment.Text = "Discard";
+            this.button_discard_appointment.UseVisualStyleBackColor = true;
+            this.button_discard_appointment.Click += new System.EventHandler(this.button_discard_appointment_Click);
+            // 
+            // textBox_appointment_contact
+            // 
+            this.textBox_appointment_contact.Location = new System.Drawing.Point(242, 556);
+            this.textBox_appointment_contact.Name = "textBox_appointment_contact";
+            this.textBox_appointment_contact.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment_contact.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(94, 559);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(110, 17);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Contact Number";
+            // 
+            // button_new_appointment
+            // 
+            this.button_new_appointment.Location = new System.Drawing.Point(48, 616);
+            this.button_new_appointment.Name = "button_new_appointment";
+            this.button_new_appointment.Size = new System.Drawing.Size(147, 35);
+            this.button_new_appointment.TabIndex = 14;
+            this.button_new_appointment.Text = "New Appointment";
+            this.button_new_appointment.UseVisualStyleBackColor = true;
+            this.button_new_appointment.Click += new System.EventHandler(this.button_new_appointment_Click);
+            // 
+            // button_save_appointment
+            // 
+            this.button_save_appointment.Enabled = false;
+            this.button_save_appointment.Location = new System.Drawing.Point(217, 616);
+            this.button_save_appointment.Name = "button_save_appointment";
+            this.button_save_appointment.Size = new System.Drawing.Size(154, 35);
+            this.button_save_appointment.TabIndex = 13;
+            this.button_save_appointment.Text = "Save Appointment";
+            this.button_save_appointment.UseVisualStyleBackColor = true;
+            this.button_save_appointment.Click += new System.EventHandler(this.button_save_appointment_Click);
+            // 
+            // textBox_appointment_location
+            // 
+            this.textBox_appointment_location.Location = new System.Drawing.Point(242, 515);
+            this.textBox_appointment_location.Name = "textBox_appointment_location";
+            this.textBox_appointment_location.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment_location.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(58, 518);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(145, 17);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Appointment Location";
+            // 
+            // textBox_appointment_time
+            // 
+            this.textBox_appointment_time.Location = new System.Drawing.Point(242, 475);
+            this.textBox_appointment_time.Name = "textBox_appointment_time";
+            this.textBox_appointment_time.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment_time.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(81, 478);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 17);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Appointment Time";
+            // 
+            // textBox_appointment_date
+            // 
+            this.textBox_appointment_date.Location = new System.Drawing.Point(242, 435);
+            this.textBox_appointment_date.Name = "textBox_appointment_date";
+            this.textBox_appointment_date.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment_date.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(81, 438);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(121, 17);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Appointment Date";
+            // 
+            // textBox_appointment_type
+            // 
+            this.textBox_appointment_type.Location = new System.Drawing.Point(242, 396);
+            this.textBox_appointment_type.Name = "textBox_appointment_type";
+            this.textBox_appointment_type.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment_type.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(81, 399);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(123, 17);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Appointment Type";
+            // 
+            // textBox_appointment
+            // 
+            this.textBox_appointment.Location = new System.Drawing.Point(241, 357);
+            this.textBox_appointment.Name = "textBox_appointment";
+            this.textBox_appointment.Size = new System.Drawing.Size(231, 22);
+            this.textBox_appointment.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(76, 360);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 17);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Appointment Name";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(185, 308);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(206, 23);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Create an Appointment";
+            // 
             // textBox_appointments
             // 
             this.textBox_appointments.Location = new System.Drawing.Point(45, 91);
@@ -574,154 +722,6 @@
             this.button_add_friend.UseVisualStyleBackColor = true;
             this.button_add_friend.Click += new System.EventHandler(this.button1_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.radioButton_male);
-            this.groupBox1.Controls.Add(this.radioButton_female);
-            this.groupBox1.Location = new System.Drawing.Point(162, 200);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(162, 36);
-            this.groupBox1.TabIndex = 43;
-            this.groupBox1.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(185, 308);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 23);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Create an Appointment";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(80, 360);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 17);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Appointment Name";
-            // 
-            // textBox_appointment
-            // 
-            this.textBox_appointment.Location = new System.Drawing.Point(241, 357);
-            this.textBox_appointment.Name = "textBox_appointment";
-            this.textBox_appointment.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment.TabIndex = 4;
-            // 
-            // textBox_appointment_type
-            // 
-            this.textBox_appointment_type.Location = new System.Drawing.Point(242, 396);
-            this.textBox_appointment_type.Name = "textBox_appointment_type";
-            this.textBox_appointment_type.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment_type.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(81, 399);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(123, 17);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Appointment Type";
-            // 
-            // textBox_appointment_date
-            // 
-            this.textBox_appointment_date.Location = new System.Drawing.Point(242, 435);
-            this.textBox_appointment_date.Name = "textBox_appointment_date";
-            this.textBox_appointment_date.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment_date.TabIndex = 8;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(81, 438);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(121, 17);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Appointment Date";
-            // 
-            // textBox_appointment_time
-            // 
-            this.textBox_appointment_time.Location = new System.Drawing.Point(242, 475);
-            this.textBox_appointment_time.Name = "textBox_appointment_time";
-            this.textBox_appointment_time.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment_time.TabIndex = 10;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(81, 478);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(122, 17);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Appointment Time";
-            // 
-            // textBox_appointment_location
-            // 
-            this.textBox_appointment_location.Location = new System.Drawing.Point(242, 515);
-            this.textBox_appointment_location.Name = "textBox_appointment_location";
-            this.textBox_appointment_location.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment_location.TabIndex = 12;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(58, 518);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(145, 17);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Appointment Location";
-            // 
-            // button_save_appointment
-            // 
-            this.button_save_appointment.Enabled = false;
-            this.button_save_appointment.Location = new System.Drawing.Point(217, 616);
-            this.button_save_appointment.Name = "button_save_appointment";
-            this.button_save_appointment.Size = new System.Drawing.Size(154, 35);
-            this.button_save_appointment.TabIndex = 13;
-            this.button_save_appointment.Text = "Save Appointment";
-            this.button_save_appointment.UseVisualStyleBackColor = true;
-            this.button_save_appointment.Click += new System.EventHandler(this.button_save_appointment_Click);
-            // 
-            // button_new_appointment
-            // 
-            this.button_new_appointment.Location = new System.Drawing.Point(48, 616);
-            this.button_new_appointment.Name = "button_new_appointment";
-            this.button_new_appointment.Size = new System.Drawing.Size(147, 35);
-            this.button_new_appointment.TabIndex = 14;
-            this.button_new_appointment.Text = "New Appointment";
-            this.button_new_appointment.UseVisualStyleBackColor = true;
-            this.button_new_appointment.Click += new System.EventHandler(this.button_new_appointment_Click);
-            // 
-            // textBox_appointment_contact
-            // 
-            this.textBox_appointment_contact.Location = new System.Drawing.Point(242, 556);
-            this.textBox_appointment_contact.Name = "textBox_appointment_contact";
-            this.textBox_appointment_contact.Size = new System.Drawing.Size(231, 22);
-            this.textBox_appointment_contact.TabIndex = 16;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(88, 559);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(110, 17);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Contact Number";
-            // 
-            // button_discard_appointment
-            // 
-            this.button_discard_appointment.Enabled = false;
-            this.button_discard_appointment.Location = new System.Drawing.Point(397, 616);
-            this.button_discard_appointment.Name = "button_discard_appointment";
-            this.button_discard_appointment.Size = new System.Drawing.Size(84, 35);
-            this.button_discard_appointment.TabIndex = 17;
-            this.button_discard_appointment.Text = "Discard";
-            this.button_discard_appointment.UseVisualStyleBackColor = true;
-            this.button_discard_appointment.Click += new System.EventHandler(this.button_discard_appointment_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -736,10 +736,10 @@
             this.Text = "Contact Manager";
             this.panel_friendDetails.ResumeLayout(false);
             this.panel_friendDetails.PerformLayout();
-            this.panel_start.ResumeLayout(false);
-            this.panel_start.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel_start.ResumeLayout(false);
+            this.panel_start.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
