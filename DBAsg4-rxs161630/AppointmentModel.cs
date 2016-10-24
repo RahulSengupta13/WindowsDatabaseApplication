@@ -8,6 +8,7 @@ namespace DBAsg4_rxs161630
 {
     class AppointmentModel
     {
+        //changes
         public string appointmentType
         {
             get;
