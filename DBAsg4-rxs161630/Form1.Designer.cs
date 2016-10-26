@@ -95,8 +95,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_appointments = new System.Windows.Forms.TextBox();
             this.button_add_friend = new System.Windows.Forms.Button();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripStatus_indicator = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatus_iText = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel_friendDetails.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.panel_start.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,7 +110,8 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4});
+            this.columnHeader4,
+            this.columnHeader5});
             this.listView1.Location = new System.Drawing.Point(12, 12);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(392, 709);
@@ -531,9 +536,12 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 746);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatus_indicator,
+            this.toolStripStatus_iText});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 738);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(981, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(981, 30);
             this.statusStrip1.TabIndex = 40;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -722,6 +730,24 @@
             this.button_add_friend.UseVisualStyleBackColor = true;
             this.button_add_friend.Click += new System.EventHandler(this.button1_Click);
             // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "id";
+            this.columnHeader5.Width = 0;
+            // 
+            // toolStripStatus_indicator
+            // 
+            this.toolStripStatus_indicator.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.toolStripStatus_indicator.Name = "toolStripStatus_indicator";
+            this.toolStripStatus_indicator.Size = new System.Drawing.Size(28, 25);
+            this.toolStripStatus_indicator.Text = "⚫";
+            // 
+            // toolStripStatus_iText
+            // 
+            this.toolStripStatus_iText.Name = "toolStripStatus_iText";
+            this.toolStripStatus_iText.Size = new System.Drawing.Size(50, 25);
+            this.toolStripStatus_iText.Text = "Ready";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -738,6 +764,8 @@
             this.panel_friendDetails.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.panel_start.ResumeLayout(false);
             this.panel_start.PerformLayout();
             this.ResumeLayout(false);
@@ -814,6 +842,9 @@
         private System.Windows.Forms.TextBox textBox_appointment_contact;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button_discard_appointment;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatus_indicator;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatus_iText;
     }
 }
 

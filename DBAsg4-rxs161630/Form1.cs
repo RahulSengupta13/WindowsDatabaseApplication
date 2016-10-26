@@ -16,6 +16,7 @@ namespace DBAsg4_rxs161630
     {
         List<Model> listViewItems;
         bool creatingAppointment = false;
+        int currentPersonId;
         public Form1()
         {
             InitializeComponent();
@@ -30,38 +31,35 @@ namespace DBAsg4_rxs161630
 
         private void button_save_Click(object sender, EventArgs e)
         {
-            if(button_save.Text.Equals("Save"))
+            int rowsAffected = 0;
+            string fname = textBox_fname.Text;
+            string mi = textBox_mi.Text;
+            string lname = textBox_lname.Text;
+            string DateMet = textBox_DateMet.Text;
+            string placeMet = textBox_placeMet.Text;
+            string dob = textBox_dob.Text;
+            string apt = textBox_apt.Text;
+            string street = textBox_street.Text;
+            string locality = textBox_locality.Text;
+            string city = textBox_city.Text;
+            string zipcode = textBox_zipcode.Text;
+            string state = textBox_state.Text;
+            string country = textBox_country.Text;
+            string email = textBox_email.Text;
+            string phone = textBox_phone.Text;
+            string gender = null;
+            string familyFriend = null;
+            string familyName = textBox_familyName.Text;
+            if (radioButton_male.Checked)
+                gender = "m";
+            else if (radioButton_female.Checked)
+                gender = "f";
+            if (radioButton_fyes.Checked)
+                familyFriend = "y";
+            else if (radioButton_fno.Checked)
+                familyFriend = "n";
+            if (button_save.Text.Equals("Save"))
             {
-                int rowsAffected = 0;
-                string fname = textBox_fname.Text;
-                string mi = textBox_mi.Text;
-                string lname = textBox_lname.Text;
-                string DateMet = textBox_DateMet.Text;
-                string placeMet = textBox_placeMet.Text;
-                string dob = textBox_dob.Text;
-                string apt = textBox_apt.Text;
-                string street = textBox_street.Text;
-                string locality = textBox_locality.Text;
-                string city = textBox_city.Text;
-                string zipcode = textBox_zipcode.Text;
-                string state = textBox_state.Text;
-                string country = textBox_country.Text;
-                string email = textBox_email.Text;
-                string phone = textBox_phone.Text;
-                string gender = null;
-                string familyFriend = null;
-                string familyName = textBox_familyName.Text;
-                if (radioButton_male.Checked)
-                    gender = "m";
-                else if (radioButton_female.Checked)
-                    gender = "f";
-                if (radioButton_fyes.Checked)
-                    familyFriend = "y";
-                else if(radioButton_fno.Checked)
-                    familyFriend = "n";
-
-                clearAddControls();
-
                 Thread insertThread = new Thread(() =>
                 {
                     rowsAffected = DBUtils.insert(fname, mi, lname, DateMet, placeMet, dob, apt, street, locality, city, zipcode, state, country, email, phone, gender, familyFriend, familyName);
@@ -77,15 +75,30 @@ namespace DBAsg4_rxs161630
                 {
                     MessageBox.Show("Failed!");
                 }
-                panel_start.Visible = true;
-                panel_friendDetails.Visible = false;
-                clearAddControls();
-                refreshListView();
             }
             else if(button_save.Text.Equals("Update"))
             {
-                MessageBox.Show("Updated");
+                Thread updateThread = new Thread(() =>
+                {
+                    rowsAffected = DBUtils.update(fname, mi, lname, DateMet, placeMet, dob, apt, street, locality, city, zipcode, state, country, email, phone, gender, familyFriend, familyName,currentPersonId);
+                });
+                updateThread.Start();
+                updateThread.Join();
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Friend updated!");
+                }
+                else
+                {
+                    MessageBox.Show("Update Failed!");
+                }
             }
+            panel_start.Visible = true;
+            panel_friendDetails.Visible = false;
+            clearAddControls();
+            refreshListView();
+            UpdateIndicator(Color.Green, "Ready");
         }
 
         public void clearAddControls()
@@ -126,8 +139,16 @@ namespace DBAsg4_rxs161630
                 item.SubItems.Add(model.middleInitial);
                 item.SubItems.Add(model.lastName);
                 item.SubItems.Add(model.phone);
+                item.SubItems.Add(model.personId+"");
                 listView1.Items.Add(item);
             }
+            UpdateIndicator(Color.Green, "Ready");
+        }
+
+        private void UpdateIndicator(Color color, String text)
+        {
+            toolStripStatus_indicator.ForeColor = color;
+            toolStripStatus_iText.Text = text;
         }
 
         //adding new contact
@@ -138,6 +159,7 @@ namespace DBAsg4_rxs161630
             button_delete.Enabled = false;
             button_save.Text = "Save";
             textBox_fname.Focus();
+            UpdateIndicator(Color.Yellow, "Adding a Contact");
         }
 
         private void button_discard_Click(object sender, EventArgs e)
@@ -145,6 +167,8 @@ namespace DBAsg4_rxs161630
             panel_start.Visible = true;
             panel_friendDetails.Visible = false;
             button_add_friend.Select();
+            clearAddControls();
+            UpdateIndicator(Color.Green, "Ready");
         }
 
         private void setValues(Model model)
@@ -176,8 +200,10 @@ namespace DBAsg4_rxs161630
         {
             if(listView1.SelectedItems.Count > 0 && !creatingAppointment)
             {
+                UpdateIndicator(Color.Yellow, "Updating Contact");
                 button_save.Text = "Update";
                 String phone = listView1.SelectedItems[0].SubItems[3].Text;
+                currentPersonId = Convert.ToInt32(listView1.SelectedItems[0].SubItems[4].Text);
                 Model model = null ;
                 Thread getContact = new Thread(()=> {
                     model = DBUtils.getContactInfo(phone);
@@ -201,15 +227,15 @@ namespace DBAsg4_rxs161630
         private void button_delete_Click(object sender, EventArgs e)
         {
             String phone = textBox_phone.Text;
-            int result = DBUtils.deleteContact(phone);
-            if(result>0)
+            int result = DBUtils.deleteContact(currentPersonId);
+            if (result > 0)
             {
-
                 clearAddControls();
                 panel_start.Visible = true;
                 panel_friendDetails.Visible = false;
                 refreshListView();
             }
+            UpdateIndicator(Color.Green, "Ready");
         }
 
         private void button_new_appointment_Click(object sender, EventArgs e)
@@ -220,6 +246,7 @@ namespace DBAsg4_rxs161630
             button_save_appointment.Enabled = true;
             button_new_appointment.Enabled = false;
             enableAppointment();
+            UpdateIndicator(Color.OrangeRed, "Creating Appointment");
         }
 
         private void button_discard_appointment_Click(object sender, EventArgs e)
@@ -229,6 +256,7 @@ namespace DBAsg4_rxs161630
             button_save_appointment.Enabled = false;
             button_new_appointment.Enabled = true;
             disableAppointment();
+            UpdateIndicator(Color.Green, "Ready");
         }
 
         private void button_save_appointment_Click(object sender, EventArgs e)
@@ -244,6 +272,7 @@ namespace DBAsg4_rxs161630
                 MessageBox.Show("Appointment Created");
             }
             setAppointments();
+            UpdateIndicator(Color.Green, "Ready");
         }
 
         private void disableAppointment()

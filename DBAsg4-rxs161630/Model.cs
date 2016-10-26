@@ -8,6 +8,11 @@ namespace DBAsg4_rxs161630
 {
     class Model
     {
+        public int personId
+        {
+            get;
+            set;
+        }
         public string firstName
         {
             get;

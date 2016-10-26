@@ -18,7 +18,7 @@ namespace DBAsg4_rxs161630
         {
             builder.Server = "localhost";
             builder.UserID = "root";
-            builder.Password = "*";
+            builder.Password = "7252";
             builder.Database = "asg3-rxs161630";
         }
 
@@ -67,10 +67,8 @@ namespace DBAsg4_rxs161630
             DateTime dateMet, birthday;
             DateTime.TryParse(DateMet, out dateMet);
             DateMet = dateMet.ToString("yyyy-MM-dd");
-
             DateTime.TryParse(dob, out birthday);
             dob = birthday.ToString("yyyy-MM-dd");
-
             MySqlCommand cmd = new MySqlCommand("insert_contact", connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("fname", fname));
@@ -91,8 +89,38 @@ namespace DBAsg4_rxs161630
             cmd.Parameters.Add(new MySqlParameter("zipcode", zipcode));
             cmd.Parameters.Add(new MySqlParameter("state", state));
             cmd.Parameters.Add(new MySqlParameter("country", country));
-            
+            return cmd.ExecuteNonQuery();
+        }
 
+
+        public static int update(string fname, string mi, string lname, string DateMet, string placeMet, string dob, string apt, string street, string locality, string city, string zipcode, string state, string country, string email, string phone, string gender, string familyFriend, string familyName, int currentPersonId)
+        {
+            DateTime dateMet, birthday;
+            DateTime.TryParse(DateMet, out dateMet);
+            DateMet = dateMet.ToString("yyyy-MM-dd");
+            DateTime.TryParse(dob, out birthday);
+            dob = birthday.ToString("yyyy-MM-dd");
+            MySqlCommand cmd = new MySqlCommand("updateContact", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("fname", fname));
+            cmd.Parameters.Add(new MySqlParameter("lname", lname));
+            cmd.Parameters.Add(new MySqlParameter("mi", mi));
+            cmd.Parameters.Add(new MySqlParameter("dob", dob));
+            cmd.Parameters.Add(new MySqlParameter("datemet", DateMet));
+            cmd.Parameters.Add(new MySqlParameter("placeMet", placeMet));
+            cmd.Parameters.Add(new MySqlParameter("gender", gender));
+            cmd.Parameters.Add(new MySqlParameter("email", email));
+            cmd.Parameters.Add(new MySqlParameter("phone", phone));
+            cmd.Parameters.Add(new MySqlParameter("familyFriend", familyFriend));
+            cmd.Parameters.Add(new MySqlParameter("familyName", familyName));
+            cmd.Parameters.Add(new MySqlParameter("apartmentNumber", apt));
+            cmd.Parameters.Add(new MySqlParameter("streetName", street));
+            cmd.Parameters.Add(new MySqlParameter("areaLocality", locality));
+            cmd.Parameters.Add(new MySqlParameter("city", city));
+            cmd.Parameters.Add(new MySqlParameter("zipcode", zipcode));
+            cmd.Parameters.Add(new MySqlParameter("state", state));
+            cmd.Parameters.Add(new MySqlParameter("country", country));
+            cmd.Parameters.Add(new MySqlParameter("personID", currentPersonId));
             return cmd.ExecuteNonQuery();
         }
 
@@ -109,6 +137,7 @@ namespace DBAsg4_rxs161630
                 model.lastName = Convert.ToString(dr["lastName"]);
                 model.middleInitial = Convert.ToString(dr["middleInitial"]);
                 model.phone = Convert.ToString(dr["phoneNumber"]);
+                model.personId = Convert.ToInt32(dr["personId"]);
                 listViewItems.Add(model);
             }
             dr.Close();
@@ -145,11 +174,11 @@ namespace DBAsg4_rxs161630
             return model;
         }
 
-        public static int deleteContact(String phone)
+        public static int deleteContact(int personID)
         {
             MySqlCommand cmd = new MySqlCommand("deleteContact", connection);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new MySqlParameter("phone", phone));
+            cmd.Parameters.Add(new MySqlParameter("personID", personID));
             return cmd.ExecuteNonQuery();
         }
 
@@ -184,10 +213,8 @@ namespace DBAsg4_rxs161630
                 model.appointmentType = Convert.ToString(dr["appointmentType"]);
                 model.appointmentTime = Convert.ToString(dr["appointmentTime"]);
                 model.appointmentDescription = Convert.ToString(dr["appointmentDescription"]);
-
                 DateTime date;
                 DateTime.TryParse(Convert.ToString(dr["appointmentDate"]), out date);
-
                 model.appointmentDate = date.ToString("yyyy-MM-dd");
                 appointments.Add(model);
             }
