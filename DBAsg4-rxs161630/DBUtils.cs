@@ -18,7 +18,7 @@ namespace DBAsg4_rxs161630
         {
             builder.Server = "localhost";
             builder.UserID = "root";
-            builder.Password = "7252";
+            builder.Password = "*";
             builder.Database = "asg3-rxs161630";
         }
 
@@ -62,6 +62,7 @@ namespace DBAsg4_rxs161630
             }
         }
 
+        //Function to Insert Into Database with a Stored Procedure Call
         public static int insert(string fname, string mi, string lname, string DateMet, string placeMet, string dob, string apt, string street, string locality, string city, string zipcode, string state, string country, string email, string phone, string gender, string familyFriend, string familyName)
         {
             DateTime dateMet, birthday;
@@ -80,7 +81,7 @@ namespace DBAsg4_rxs161630
             cmd.Parameters.Add(new MySqlParameter("gender", gender));
             cmd.Parameters.Add(new MySqlParameter("email", email));
             cmd.Parameters.Add(new MySqlParameter("phone", phone));
-            cmd.Parameters.Add(new MySqlParameter("familyFriend", familyFriend));
+            cmd.Parameters.Add(new MySqlParameter("familyFriend", 'n'));
             cmd.Parameters.Add(new MySqlParameter("familyName", familyName));
             cmd.Parameters.Add(new MySqlParameter("apartmentNumber", apt));
             cmd.Parameters.Add(new MySqlParameter("streetName", street));
@@ -93,6 +94,7 @@ namespace DBAsg4_rxs161630
         }
 
 
+        //Function to Update Database with a Stored Procedure Call
         public static int update(string fname, string mi, string lname, string DateMet, string placeMet, string dob, string apt, string street, string locality, string city, string zipcode, string state, string country, string email, string phone, string gender, string familyFriend, string familyName, int currentPersonId)
         {
             DateTime dateMet, birthday;
@@ -124,6 +126,7 @@ namespace DBAsg4_rxs161630
             return cmd.ExecuteNonQuery();
         }
 
+        //Function to Get Contacts with a Stored Procedure Call
         public static List<Model> getListViewData()
         {
             List<Model> listViewItems = new List<Model>();
@@ -144,6 +147,7 @@ namespace DBAsg4_rxs161630
             return listViewItems;
         }
 
+        //Function to Get a specific Contact with a Stored Procedure Call
         public static Model getContactInfo(String phone)
         {
             Model model = new Model();
@@ -174,6 +178,7 @@ namespace DBAsg4_rxs161630
             return model;
         }
 
+        //Function to Delete a contact with a Stored Procedure Call
         public static int deleteContact(int personID)
         {
             MySqlCommand cmd = new MySqlCommand("deleteContact", connection);
@@ -182,6 +187,7 @@ namespace DBAsg4_rxs161630
             return cmd.ExecuteNonQuery();
         }
 
+        //Function to Insert Appointment Into Database with a Stored Procedure Call
         public static int createAppointment(String name, String type, String date, String time, String location, String contact)
         {
             DateTime dateApt, timeApt;
@@ -199,6 +205,7 @@ namespace DBAsg4_rxs161630
             return cmd.ExecuteNonQuery();
         }
 
+        //Function to Get Appointments with a Stored Procedure Call
         public static List<AppointmentModel> getAppointments()
         {
             List<AppointmentModel> appointments = new List<AppointmentModel>();

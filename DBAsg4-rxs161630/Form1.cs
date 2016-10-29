@@ -1,4 +1,23 @@
-﻿using MySql.Data.MySqlClient;
+﻿/*===============================================================================================
+ |
+ |       Author:  Rahul Sengupta 
+ |     Language:  C#
+ |
+ +-----------------------------------------------------------------------------------------------
+ |
+ |  Description:  An application to perform DML Operations on the Contact Manager Database.
+ |
+ |        Input:  User can Add/Delete/Update/View Contacts. 
+ |
+ |       Output:  The Screen shows Current list of contacts stored in the Database, with the
+ |                option of performing DML operations.
+ |
+ |    Algorithm:  -
+ |   Known Bugs:  -
+ |   Required Features Not Included:  -
+ |
+ ==============================================================================================*/
+ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +28,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace DBAsg4_rxs161630
 {
@@ -17,15 +37,20 @@ namespace DBAsg4_rxs161630
         List<Model> listViewItems;
         bool creatingAppointment = false;
         int currentPersonId;
+
+        //Form Constructor
         public Form1()
         {
             InitializeComponent();
+            //Check and Establish Connectivity to the Database
             DBUtils dbUtils = new DBUtils();
             dbUtils.OpenConnection();
             panel_start.Visible = true;
             button_add_friend.Select();
+            //Update listview with existing contacts in the DataBase
             refreshListView();
             disableAppointment();
+            //Update Appointments from the database
             setAppointments();
         }
 
@@ -60,6 +85,7 @@ namespace DBAsg4_rxs161630
                 familyFriend = "n";
             if (button_save.Text.Equals("Save"))
             {
+                //Insert into Database in a new thread
                 Thread insertThread = new Thread(() =>
                 {
                     rowsAffected = DBUtils.insert(fname, mi, lname, DateMet, placeMet, dob, apt, street, locality, city, zipcode, state, country, email, phone, gender, familyFriend, familyName);
@@ -78,6 +104,7 @@ namespace DBAsg4_rxs161630
             }
             else if(button_save.Text.Equals("Update"))
             {
+                //Update Database in a new thread
                 Thread updateThread = new Thread(() =>
                 {
                     rowsAffected = DBUtils.update(fname, mi, lname, DateMet, placeMet, dob, apt, street, locality, city, zipcode, state, country, email, phone, gender, familyFriend, familyName,currentPersonId);
@@ -99,32 +126,10 @@ namespace DBAsg4_rxs161630
             clearAddControls();
             refreshListView();
             UpdateIndicator(Color.Green, "Ready");
+            listView1.Enabled = true;
         }
 
-        public void clearAddControls()
-        {
-            textBox_fname.Clear();
-            textBox_mi.Clear();
-            textBox_lname.Clear();
-            textBox_DateMet.Clear();
-            textBox_placeMet.Clear();
-            textBox_dob.Clear();
-            radioButton_male.Checked = false;
-            radioButton_female.Checked = false;
-            textBox_apt.Clear();
-            textBox_street.Clear();
-            textBox_locality.Clear();
-            textBox_city.Clear();
-            textBox_zipcode.Clear();
-            textBox_state.Clear();
-            textBox_country.Clear();
-            textBox_email.Clear();
-            textBox_phone.Clear();
-            radioButton_fyes.Checked = false;
-            radioButton_fno.Checked = false;
-            textBox_familyName.Clear();
-        }
-
+        //Function to Update ListView from the DataBase
         private void refreshListView()
         {
             Thread loadListView = new Thread(() => {
@@ -143,6 +148,7 @@ namespace DBAsg4_rxs161630
                 listView1.Items.Add(item);
             }
             UpdateIndicator(Color.Green, "Ready");
+            toolStripStatus_contacts.Text = listViewItems.Count + "";
         }
 
         private void UpdateIndicator(Color color, String text)
@@ -151,7 +157,7 @@ namespace DBAsg4_rxs161630
             toolStripStatus_iText.Text = text;
         }
 
-        //adding new contact
+        //Bring up the panel to add a new contact
         private void button1_Click(object sender, EventArgs e)
         {
             panel_start.Visible = false;
@@ -160,6 +166,7 @@ namespace DBAsg4_rxs161630
             button_save.Text = "Save";
             textBox_fname.Focus();
             UpdateIndicator(Color.Yellow, "Adding a Contact");
+            listView1.Enabled = false;
         }
 
         private void button_discard_Click(object sender, EventArgs e)
@@ -169,6 +176,7 @@ namespace DBAsg4_rxs161630
             button_add_friend.Select();
             clearAddControls();
             UpdateIndicator(Color.Green, "Ready");
+            listView1.Enabled = true;
         }
 
         private void setValues(Model model)
@@ -217,6 +225,7 @@ namespace DBAsg4_rxs161630
                     panel_friendDetails.Visible = true;
                     button_delete.Enabled = true;
                 }
+                listView1.Enabled = false;
             }
             else if(listView1.SelectedItems.Count > 0 && creatingAppointment)
             {
@@ -224,6 +233,7 @@ namespace DBAsg4_rxs161630
             }
         }
 
+        //Function to Delete a Contact
         private void button_delete_Click(object sender, EventArgs e)
         {
             String phone = textBox_phone.Text;
@@ -236,8 +246,10 @@ namespace DBAsg4_rxs161630
                 refreshListView();
             }
             UpdateIndicator(Color.Green, "Ready");
+            listView1.Enabled = true;
         }
 
+        //Function to Create a New Appointment
         private void button_new_appointment_Click(object sender, EventArgs e)
         {
             creatingAppointment = true;
@@ -247,6 +259,7 @@ namespace DBAsg4_rxs161630
             button_new_appointment.Enabled = false;
             enableAppointment();
             UpdateIndicator(Color.OrangeRed, "Creating Appointment");
+            textBox_aptnote.Visible = true;
         }
 
         private void button_discard_appointment_Click(object sender, EventArgs e)
@@ -257,8 +270,10 @@ namespace DBAsg4_rxs161630
             button_new_appointment.Enabled = true;
             disableAppointment();
             UpdateIndicator(Color.Green, "Ready");
+            textBox_aptnote.Visible = false;
         }
 
+        //Function to Save the New Appointment
         private void button_save_appointment_Click(object sender, EventArgs e)
         {
             creatingAppointment = false;
@@ -273,6 +288,32 @@ namespace DBAsg4_rxs161630
             }
             setAppointments();
             UpdateIndicator(Color.Green, "Ready");
+            textBox_aptnote.Visible = false;
+        }
+
+
+        public void clearAddControls()
+        {
+            textBox_fname.Clear();
+            textBox_mi.Clear();
+            textBox_lname.Clear();
+            textBox_DateMet.Clear();
+            textBox_placeMet.Clear();
+            textBox_dob.Clear();
+            radioButton_male.Checked = false;
+            radioButton_female.Checked = false;
+            textBox_apt.Clear();
+            textBox_street.Clear();
+            textBox_locality.Clear();
+            textBox_city.Clear();
+            textBox_zipcode.Clear();
+            textBox_state.Clear();
+            textBox_country.Clear();
+            textBox_email.Clear();
+            textBox_phone.Clear();
+            radioButton_fyes.Checked = false;
+            radioButton_fno.Checked = false;
+            textBox_familyName.Clear();
         }
 
         private void disableAppointment()
@@ -308,7 +349,7 @@ namespace DBAsg4_rxs161630
             textBox_appointment_time.Clear();
             textBox_appointment_type.Clear();
         }
-
+        
         private void setAppointments()
         {
             List<AppointmentModel> appointments = DBUtils.getAppointments();
@@ -325,5 +366,82 @@ namespace DBAsg4_rxs161630
                 textBox_appointments.Text = "No Appointments to show.";
             }
         }
+
+        private void textBox_fname_TextChanged(object sender, EventArgs e)
+        {
+            if(textBox_fname.Text.Length < 1)
+            {
+                errorProvider_fname.SetError(textBox_fname, "Enter a valid First Name");
+            }
+            else
+            {
+                errorProvider_fname.Clear();
+            }
+        }
+
+        private void textBox_lname_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox_lname.Text.Length < 1)
+            {
+                errorProvider_lastName.SetError(textBox_lname, "Enter a valid Last Name");
+            }
+            else
+            {
+                errorProvider_lastName.Clear();
+            }
+        }
+
+        private void textBox_DateMet_TextChanged(object sender, EventArgs e)
+        {
+            DateTime date;
+            if(DateTime.TryParse(textBox_DateMet.Text, out date))
+            {
+                errorProvider_dateMet.Clear();
+            }
+            else
+            {
+                errorProvider_dateMet.SetError(textBox_DateMet, "Enter date in yyyy-mm-dd format.");
+            }
+        }
+
+        private void textBox_dob_TextChanged(object sender, EventArgs e)
+        {
+            DateTime date;
+            if (DateTime.TryParse(textBox_dob.Text, out date))
+            {
+                errorProvider_dob.Clear();
+            }
+            else
+            {
+                errorProvider_dob.SetError(textBox_dob, "Enter date in yyyy-mm-dd format.");
+            }
+        }
+
+        private void textBox_email_TextChanged(object sender, EventArgs e)
+        {
+            Regex rx = new Regex(@"^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
+            if (rx.IsMatch(textBox_email.Text))
+            {
+                errorProvider_email.Clear();
+            }
+            else
+            {
+                errorProvider_email.SetError(textBox_email, "Enter a valid Email-id.");
+            }
+        }
+
+        private void textBox_placeMet_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox_placeMet.Text.Length < 1)
+            {
+                errorProvider_place.SetError(textBox_placeMet, "Where did you meet the person?");
+            }
+            else
+            {
+                errorProvider_place.Clear();
+            }
+        }
+
+        
     }
 }
